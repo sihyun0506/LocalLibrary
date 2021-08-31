@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sbk.locallib.book.dao.BookMapper">
+
+<insert id="bookInsert" parameterType="book">
+insert into
+	book(
+		book_id
+		,book_name
+		,author
+		,publisher
+		,isbn
+		,kdc
+		,owner_id
+	)values(
+		book_seq.nextval
+		,#{book_name}
+		,#{author}
+		,#{publisher}
+		,#{isbn}
+		,#{kdc}
+		,#{owner_id}
+	)
+</insert>
+
+<select id="getMyBooks" parameterType="string" resultType="book">
+select
+	book_id
+	,book_name
+	,author
+	,publisher
+	,isbn
+	,kdc
+	,to_char(indate,'yyyy-MM-dd') as indate
+	,owner_id
+	,state_gb
+from
+	book
+where
+	owner_id = #{owner_id}
+</select>
+
+
+<select id="bookSearchDB" parameterType="string" resultType="book">
+select
+	book_id
+	,book_name
+	,author
+	,publisher
+	,isbn
+	,kdc
+	,to_char(indate,'yyyy-MM-dd') as indate
+	,owner_id
+	,state_gb
+from
+	book
+where
+	(book_name like '%' || #{keyword} || '%'
+or	
+	author like '%' || #{keyword} || '%'
+or
+	publisher like '%' || #{keyword} || '%'
+or
+	isbn like '%' || #{keyword} || '%')
+and
+	state_gb = 1
+
+</select>
+
+<select id="bookAdvSearchDB" parameterType="book" resultType="book">
+select
+	book_id
+	,book_name
+	,author
+	,publisher
+	,isbn
+	,kdc
+	,to_char(indate,'yyyy-MM-dd') as indate
+	,owner_id
+	,state_gb
+from
+	book
+where
+	book_name like '%' || #{book_name} || '%'
+and	
+	author like '%' || #{author} || '%'
+and
+	publisher like '%' || #{publisher} || '%'
+and
+	isbn like '%' || #{isbn} || '%'
+and
+	state_gb = 1
+
+</select>
+
+<update id="changeBookState3" parameterType="int">
+update
+	book
+set
+	state_gb = 3
+where
+	book_id = #{book_id}
+</update>
+
+<update id="changeBookState2" parameterType="int">
+update
+	book
+set
+	state_gb = 2
+where
+	book_id = #{book_id}
+</update>
+
+<update id="changeBookState1" parameterType="int">
+update
+	book
+set
+	state_gb = 1
+where
+	book_id = #{book_id}
+</update>
+
+<select id="getBookOwner" parameterType="int" resultType="string">
+select
+	owner_id
+from
+	book
+where
+	book_id = #{book_id}
+</select>
+
+<select id="getBookInfo" parameterType="int" resultType="book">
+select
+	book_id
+	,book_name
+	,author
+	,publisher
+	,isbn
+	,kdc
+	,to_char(indate,'yyyy-MM-dd') as indate
+	,owner_id
+	,state_gb
+from
+	book
+where
+	book_id = #{book_id}
+</select>
+</mapper>

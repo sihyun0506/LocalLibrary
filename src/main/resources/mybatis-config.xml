@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.sbk.locallib.member.vo.MemberVO" alias="member" />
+		<typeAlias type="com.sbk.locallib.book.vo.BookVO" alias="book" />
+		<typeAlias type="com.sbk.locallib.message.vo.MessageVO" alias="message" />
+		<typeAlias type="com.sbk.locallib.rent.vo.RentVO" alias="rent" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/BookMapper.xml" />
+		<mapper resource="mapper/FindMapper.xml" />
+		<mapper resource="mapper/UpdateMapper.xml" />
+		<mapper resource="mapper/messageMapper.xml" />
+		<mapper resource="mapper/rentMapper.xml" />
+	</mappers>
+</configuration>

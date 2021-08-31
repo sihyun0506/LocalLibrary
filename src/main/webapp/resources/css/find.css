@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.form-signin {
+    width: 100%;
+    max-width: 550px;
+    padding: 15px;
+    margin: auto;
+}
+.form-update {
+    width: 100%;
+    max-width: 800px;
+    padding: 15px;
+    margin: auto;
+}

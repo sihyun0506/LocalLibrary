@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="com.sbk.locallib.rent.dao.RentMapper">
+<insert id="reservation" parameterType="rent">
+insert into
+	rent_record(
+		rent_id
+		,user_id
+		,book_id
+	)values(
+		rent_record_seq.nextval
+		,#{user_id}
+		,#{book_id}
+	)
+	<selectKey keyProperty="rent_id" resultType="int" order="AFTER">
+		select 
+			rent_record_seq.currval	
+		from
+			dual
+	</selectKey>
+</insert>
+
+<update id="updateOwnerRentCk" parameterType="rent">
+update
+	rent_record
+set
+	owner_rent_ck = #{owner_rent_ck}
+	,owner_rent_ck_date = sysdate
+where
+	rent_id = #{rent_id}
+</update>
+
+<update id="updateRentCk" parameterType="rent">
+update
+	rent_record
+set
+	rent_ck = #{rent_ck}
+	,rent_ck_date = sysdate
+where
+	rent_id = #{rent_id}
+</update>
+
+<update id="updateOwnerReturnCk" parameterType="rent">
+update
+	rent_record
+set
+	owner_return_ck = #{owner_return_ck}
+	,owner_return_ck_date = sysdate
+where
+	rent_id = #{rent_id}
+</update>
+
+<update id="updateReturnCk" parameterType="rent">
+update
+	rent_record
+set
+	return_ck = #{return_ck}
+	,return_ck_date = sysdate
+where
+	rent_id = #{rent_id}
+</update>
+
+<select id="checkRent" parameterType="int" resultType="rent">
+select
+	owner_rent_ck
+	,rent_ck
+	,owner_return_ck
+	,return_ck
+from
+	rent_record
+where
+	rent_id = #{rent_id}
+</select>
+
+<select id="getMyRentInfo" parameterType="string" resultType="rent">
+select
+	book_id
+	,to_char(rent_ck_date,'yyyy-MM-dd') as rent_ck_date
+from
+	rent_record
+where
+	user_id = #{loginId}
+and
+	rent_ck = 1
+and
+	owner_rent_ck = 1
+and
+	(return_ck is null
+or
+	owner_return_ck is null)
+</select>
+
+</mapper>
